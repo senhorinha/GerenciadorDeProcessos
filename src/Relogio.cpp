@@ -8,8 +8,6 @@
 #include "include/Relogio.h"
 
 Relogio::Relogio() {
-	tempoZero = 0;
-	tempoAtual = 0;
 }
 
 Relogio::~Relogio() {
@@ -17,21 +15,41 @@ Relogio::~Relogio() {
 }
 
 void Relogio::iniciar() {
-	tempoAtual = 0;
+	inicio = std::chrono::system_clock::now();
 }
 
-long Relogio::getTempoAtual(GrandezaDeTempo g) {
-	return tempoAtual;
+double Relogio::getTempoPercorridoEmMilisegundos() {
+	std::chrono::time_point < std::chrono::system_clock > atual;
+	atual = std::chrono::system_clock::now();
+	std::chrono::duration<double> tempoPercorrido = (atual - inicio) * 1000;
+	return tempoPercorrido.count();
 }
 
-void Relogio::tictac(){
-	tempoAtual++;
+double Relogio::getTempoPercorridoEmSegundos() {
+	std::chrono::time_point < std::chrono::system_clock > atual;
+	atual = std::chrono::system_clock::now();
+	std::chrono::duration<double> tempoPercorrido = (atual - inicio);
+	return tempoPercorrido.count();
 }
 
-long Relogio::getTempoPercorrido(GrandezaDeTempo g, long tempo){
-	return tempo;
+bool Relogio::cronometrarEmMilisegundos(double milisegundos) {
+	Relogio *r = new Relogio();
+	r->iniciar();
+	while (r->getTempoPercorridoEmMilisegundos() < milisegundos) {
+		funcaoParaTomarTempo();
+	}
+	return true;
 }
 
-void Relogio::cronometrar(GrandezaDeTempo grandeza, long tempo) {
+bool Relogio::cronometrarEmSegundos(double segundos) {
+	Relogio *r = new Relogio();
+	r->iniciar();
+	while (r->getTempoPercorridoEmSegundos() < segundos) {
+		funcaoParaTomarTempo();
+	}
+	return true;
+}
 
+long Relogio::funcaoParaTomarTempo() {
+	return 1;
 }

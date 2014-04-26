@@ -1,32 +1,27 @@
-/*
- * Relogio.h
- *
- *  Created on: Apr 25, 2014
- *      Author: decio
- */
-
 #ifndef RELOGIO_H_
 #define RELOGIO_H_
 
+#include <iostream>
+#include <chrono>
+#include <ctime>
+
 class Relogio {
 
-	enum GrandezaDeTempo{
-		SEGUNDOS, MILISEGUNDOS
-	};
-
-	long tempoZero;
-	long tempoAtual;
+	std::chrono::time_point<std::chrono::system_clock> inicio;
 
 public:
 	Relogio();
 	virtual ~Relogio();
 
 	void iniciar();
-	long getTempoPercorrido(GrandezaDeTempo g, long tempo);
-	void cronometrar(GrandezaDeTempo grandeza, long tempo);
+	double getTempoPercorridoEmMilisegundos();
+	double getTempoPercorridoEmSegundos();
+	bool cronometrarEmMilisegundos(double tempo);
+	bool cronometrarEmSegundos(double tempo);
 
-	long getTempoAtual(GrandezaDeTempo g);
-	void tictac();
+private:
+	long funcaoParaTomarTempo();
+
 };
 
 #endif /* RELOGIO_H_ */
