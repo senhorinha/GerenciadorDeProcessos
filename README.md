@@ -6,6 +6,7 @@
 ### Autor
 
 * [Thiago Senhorinha Rose](https://github.com/thisenrose)
+* [Décio Moritz Júnior](https://github.com/deciomoritz)
 
 ### Orientador
 
@@ -92,7 +93,7 @@ TODO: EXPLICAR
 TODO: LISTAR
 ```
 
-# Algoritmo escolhido: Earliest deadline first scheduling #
+# Algoritmo escolhido: Filas múltiplas com quantum diferenciado #
 ```
 TODO: Explicar
 ```
