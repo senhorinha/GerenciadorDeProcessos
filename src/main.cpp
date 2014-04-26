@@ -9,55 +9,102 @@
 #include "include/DadosDeControle.h"
 #include "include/DadosDeEstado.h"
 #include "include/DadosDeIdentificacao.h"
+#include "include/AnalisadorDeComando.h"
 
 using namespace std;
 
-vector<string> split(string str, string sep = " ");
 void printMessage();
 string getUserInput();
-string getCommandUserInput(string input);
-
 GerenciadorDeProcessos g;
+AnalisadorDeComando *analisador = new AnalisadorDeComando();
 
-void execute(string command, string input) {
-	if (command == "p") {
-
-	} else if (command == "") {
-
-	} else if (command == "exit" || command == "quit") {
+void execute(string comando) {
+	vector<string> partesDoComando = analisador->separarParametros(comando);
+	string nomeDoComando = partesDoComando[0];
+	if (nomeDoComando == "help") {
+		executarHelp(partesDoComando);
+	} else if (nomeDoComando == "start") {
+		//TODO: Iniciar simulação
+	} else if (nomeDoComando == "reset") {
+		//TODO: Zerar todos os processos e apresentar mensagem inicial novamente
+	} else if (nomeDoComando == "add") {
+		//TODO: Adicionar processo
+	} else if (nomeDoComando == "exit") {
 		exit(1);
+	}
+}
+void imprimirComandosDisponiveis() {
+	vector<string> comandosDisponiveis = analisador->getComandosDisponiveis();
+	cout << "Comandos disponíveis: [";
+	for (int i = 0; i < comandosDisponiveis.size(); i++) {
+		auto& c = comandosDisponiveis[i];
+		if (i == comandosDisponiveis.size() - 1) {
+			cout << c << "]" << endl;
+		} else {
+			cout << c << ", ";
+		}
+	}
+}
+
+bool executarHelp(vector<string> partesDoComando) {
+	int numeroDeParametros = partesDoComando.size() - 1;
+	if (numeroDeParametros == 0) {
+		imprimirComandosDisponiveis();
+		cout
+				<< "Sintaxe: <help> ou <help> + <comando> ou <comando> + <parametros>"
+				<< endl;
+		return true;
 	} else {
-		cout << "'" << command << "' was not found." << endl;
+		string comandoNoHelp = partesDoComando[1];
+		string descricao;
+		string comoUtilizar;
+		string parametros;
+		string exemploDeUso;
+		if (analisador->validarComando(comandoNoHelp)) {
+			if (comandoNoHelp == "start") {
+				descricao = "Inicia a simulação dos processos";
+				comoUtilizar = "start";
+				parametros = "nenhum";
+				exemploDeUso = "start";
+			} else if (comandoNoHelp == "reset") {
+				descricao = "Re-inicia o sistema";
+				comoUtilizar = "reset";
+				parametros = "nenhum";
+				exemploDeUso = "reset";
+			} else if (comandoNoHelp == "add") {
+				descricao = "Adiciona um processo à simulação";
+				comoUtilizar = "add p1 p2 p3 p4 p5";
+				parametros =
+						"p1-> nome do processo\np2-> grandeza de tempo (s para segundos ou ms para milisegundos)\np3->tempo de sistema em que o processo será inserido\np4->tempo necessário de execução\np5->prioridade (entre 1 a 10 sendo 1 o menos prioritario)";
+				exemploDeUso = "add estudar s 5 10 1";
+			} else if (comandoNoHelp == "exit") {
+				descricao = "Fechar programa";
+				comoUtilizar = "exit";
+				parametros = "nenhum";
+				exemploDeUso = "exit";
+			}
+			cout << "MANUAL: " << endl;
+			cout << comandoNoHelp << ": " << descricao << endl;
+			cout << "Como utilizar: " << comoUtilizar << endl;
+			cout << "Parâmetros: " << parametros << endl;
+			cout << "Exemplo de uso: " << exemploDeUso << endl;
+			return true;
+		}
+		return false;
 	}
 }
 
 int main() {
-
 	printMessage();
-
-	/*while (true) {
-	 string input = getUserInput();
-	 string command = getCommandUserInput(input);
-
-	 execute(command, input);
-	 }*/
-}
-
-vector<string> split(string str, string sep) {
-	char* cstr = const_cast<char*>(str.c_str());
-	char* current;
-	vector<string> arr;
-	current = strtok(cstr, sep.c_str());
-	while (current != NULL) {
-		arr.push_back(current);
-		current = strtok(NULL, sep.c_str());
+	while (true) {
+		string comando = getUserInput();
+		bool comandoValido = analisador->validarComando(comando);
+		if (comandoValido) {
+			execute(comando);
+		} else {
+			cout << "Comando Inválido, digite help para ajuda" << endl;
+		}
 	}
-	return arr;
-}
-
-string getCommandUserInput(string input) {
-	int index = input.find(" ", 0);
-	return index != 0 ? input.substr(0, index) : input;
 }
 
 string getUserInput() {
@@ -87,11 +134,10 @@ void printMessage() {
 			<< " 	                                                                        "
 			<< std::endl;
 	cout << "" << std::endl;
-	cout << "Entre com os processos no seguinte formato: " << endl;
-	cout << "Nome GrandezaDeTempo(s ou ms) TempoDeChegada Duração Prioridade"
+	cout << "Código em: https://github.com/thisenrose/GerenciadorDeProcessos"
 			<< endl;
-	cout << "Exemplo: p1 s 10 20 2" << endl;
-	cout
-			<< "No exemplo acima o processo tem nome p1 entrará no sistema aos 10 segundos, irá utilizar 20 segundos para execução e tem prioridade 2"
+	cout << "Sintaxe: <help> ou <help> + <comando> ou <comando> + <parametros>"
 			<< endl;
+	cout << endl;
+	imprimirComandosDisponiveis();
 }
