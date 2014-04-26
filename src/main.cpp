@@ -36,11 +36,11 @@ int main() {
 	printMessage();
 
 	/*while (true) {
-		string input = getUserInput();
-		string command = getCommandUserInput(input);
+	 string input = getUserInput();
+	 string command = getCommandUserInput(input);
 
-		execute(command, input);
-	}*/
+	 execute(command, input);
+	 }*/
 }
 
 vector<string> split(string str, string sep) {
@@ -67,6 +67,31 @@ string getUserInput() {
 }
 
 void printMessage() {
+	// Mensagem em ascii art : Ger. Processos
+	cout
+			<< "   ____             ____                                                 "
+			<< std::endl;
+	cout
+			<< "  / ___| ___ _ __  |  _ \\ _ __ ___   ___ ___  ___ ___  ___  ___          "
+			<< std::endl;
+	cout
+			<< " | |  _ / _ \\ '__| | |_) | '__/ _ \\ / __/ _ \\/ __/ __|/ _ \\/ __|         "
+			<< std::endl;
+	cout
+			<< " | |_| |  __/ |_   |  __/| | | (_) | (_|  __/\\__ \\__ \\ (_) \\__ \\         "
+			<< std::endl;
+	cout
+			<< "  \\____|\\___|_(_)  |_|   |_|  \\___/ \\___\\___||___/___/\\___/|___/         "
+			<< std::endl;
+	cout
+			<< " 	                                                                        "
+			<< std::endl;
+	cout << "" << std::endl;
 	cout << "Entre com os processos no seguinte formato: " << endl;
-	cout << "Nome TempoDeChegada Duração Prioridade" << endl;
+	cout << "Nome GrandezaDeTempo(s ou ms) TempoDeChegada Duração Prioridade"
+			<< endl;
+	cout << "Exemplo: p1 s 10 20 2" << endl;
+	cout
+			<< "No exemplo acima o processo tem nome p1 entrará no sistema aos 10 segundos, irá utilizar 20 segundos para execução e tem prioridade 2"
+			<< endl;
 }
