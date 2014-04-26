@@ -9,6 +9,7 @@
 
 Relogio::Relogio() {
 	tempoZero = 0;
+	tempoAtual = 0;
 }
 
 Relogio::~Relogio() {
@@ -16,6 +17,15 @@ Relogio::~Relogio() {
 }
 
 void Relogio::iniciar() {
+	tempoAtual = 0;
+}
+
+long Relogio::getTempoAtual(GrandezaDeTempo g) {
+	return tempoAtual;
+}
+
+void Relogio::tictac(){
+	tempoAtual++;
 }
 
 long Relogio::getTempoPercorrido(GrandezaDeTempo g, long tempo){

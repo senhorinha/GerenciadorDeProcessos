@@ -7,10 +7,14 @@
 
 #include "include/DadosDeIdentificacao.h"
 
+DadosDeIdentificacao::DadosDeIdentificacao(int i, string us) {
+	id = i;
+	usuario = us;
+}
+
 DadosDeIdentificacao::DadosDeIdentificacao() {
 }
 
 DadosDeIdentificacao::~DadosDeIdentificacao() {
-	// TODO Auto-generated destructor stub
 }
 

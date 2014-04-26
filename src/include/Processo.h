@@ -14,23 +14,29 @@
 
 #include "Priorizavel.h"
 
-class Processo {
+#include "Relogio.h"
+
+class Processo : public Priorizavel<Processo>{
+
+public:
 
 	DadosDeEstado estado;
 	DadosDeIdentificacao id;
 	DadosDeControle control;
 
-	Priorizavel<Processo> prioridade;
-
 	Processo * pai;
 
-public:
-	Processo(Processo & pai);
+	Relogio relogio;
+
+	int duracao;
+
+	Processo(DadosDeEstado de, DadosDeIdentificacao di, DadosDeControle dc, int duracao);
+	Processo();
 	virtual ~Processo();
 	Processo * getPai();
 
 	bool operator< (Processo & p){
-		return prioridade.compareTo(p);
+		return compareTo(p);
 	}
 
 };

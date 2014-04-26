@@ -6,6 +6,7 @@
 ### Autor
 
 * [Thiago Senhorinha Rose](https://github.com/thisenrose)
+* [Décio Moritz Júnior](https://github.com/deciomoritz)
 
 ### Orientador
 

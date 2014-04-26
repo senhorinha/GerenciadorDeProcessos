@@ -15,6 +15,7 @@ class Relogio {
 	};
 
 	long tempoZero;
+	long tempoAtual;
 
 public:
 	Relogio();
@@ -23,6 +24,9 @@ public:
 	void iniciar();
 	long getTempoPercorrido(GrandezaDeTempo g, long tempo);
 	void cronometrar(GrandezaDeTempo grandeza, long tempo);
+
+	long getTempoAtual(GrandezaDeTempo g);
+	void tictac();
 };
 
 #endif /* RELOGIO_H_ */

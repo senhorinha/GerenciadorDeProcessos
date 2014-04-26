@@ -7,11 +7,17 @@
 
 #include "include/Processo.h"
 
-Processo::Processo(Processo & p) {
-	pai = &p;
+Processo::~Processo() {
 }
 
-Processo::~Processo() {
+Processo::Processo(DadosDeEstado de, DadosDeIdentificacao di, DadosDeControle dc, int d) {
+	id = di;
+	control = dc;
+	estado = de;
+	duracao = d;
+}
+
+Processo::Processo() {
 }
 
 Processo * Processo::getPai() {

@@ -15,7 +15,10 @@ class Priorizavel{
 
 public:
 	int compareTo(T p);
-	int getPrioridade();
+
+	int getPrioridade(){
+		return prioridade;
+	}
 };
 
 #endif /* PRIORIZAVEL_H_ */

@@ -15,10 +15,12 @@ using namespace std;
 
 class DadosDeIdentificacao {
 
+public:
+
 	int id;
 	string usuario;
 
-public:
+	DadosDeIdentificacao(int i, string us);
 	DadosDeIdentificacao();
 	virtual ~DadosDeIdentificacao();
 };
