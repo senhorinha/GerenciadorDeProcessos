@@ -10,14 +10,15 @@
 
 class DadosDeEstado {
 
+
+public:
+
 	enum Estado{
 		Criado, Pronto, Executando, Bloqueado, Terminado
 	};
 
-public:
 	DadosDeEstado();
 	virtual ~DadosDeEstado();
-
 	Estado estadoAtual;
 	int programCounter;
 };
