@@ -21,6 +21,7 @@ GerenciadorDeProcessos::~GerenciadorDeProcessos() {
 
 void GerenciadorDeProcessos::criar(Processo p) {
 	criados.fila.push(p);
+	p.estado.estadoAtual = p.estado.Criado;
 	totalProcessos++;
 }
 
@@ -30,6 +31,7 @@ void GerenciadorDeProcessos::carregarEmMemoria() {
 		p = criados.fila.front();
 		criados.fila.pop();
 		prontos.adicionar(p);
+		p.estado.estadoAtual = p.estado.Pronto;
 	}
 }
 
@@ -37,6 +39,7 @@ Processo GerenciadorDeProcessos::escalonarProximo() {
 	Processo p;
 	p = prontos.removerMaisPrioritario();
 	executando.push_back(p);
+	p.estado.estadoAtual = p.estado.Executando;
 	return p;
 }
 
@@ -74,31 +77,38 @@ void GerenciadorDeProcessos::simularDesbloqueio() {
 }
 
 void GerenciadorDeProcessos::terminar(Processo p) {
+	p.estado.estadoAtual = p.estado.Terminado;
 	terminados.push_back(p);
 	executando.remove(p);
 }
 
 void GerenciadorDeProcessos::preemptar(Processo p) {
+	p.estado.estadoAtual = p.estado.Pronto;
 	prontos.reduzirPrioridade(p, quantum - 1);
 	executando.remove(p);
 }
 
 void GerenciadorDeProcessos::simular() {
 	Processo p;
-	int tempoGastoAtual = 0;
 	atualizarQuantum();
 	while (terminados.size() != totalProcessos) {
 		carregarEmMemoria();
 		simularDesbloqueio();
 		p = escalonarProximo();
-		while (tempoGastoAtual <= quantum) {
-			p.relogio.tictac();
-			relogio.tictac();
-			tempoGastoAtual++;
-			if(simularBloqueio(p))
-				break;
-			if (tempoGastoAtual >= p.duracao)
+		double tempoParaFinalizarExecucao =
+				p.control.getTempoNecessarioParaFinalizarExecucao();
+		if (tempoParaFinalizarExecucao > quantum) {
+			relogio.cronometrarEmMilisegundos(quantum);
+			p.control.adicionarTempoAcumuladoDeCPU(quantum);
+		} else {
+			relogio.cronometrarEmMilisegundos(tempoParaFinalizarExecucao);
+			p.control.adicionarTempoAcumuladoDeCPU(tempoParaFinalizarExecucao);
+		}
+		if (simularBloqueio(p)) {
+			break;
+			if (p.control.isProcessoFinalizado()) {
 				terminar(p);
+			}
 		}
 		preemptar(p);
 	}
