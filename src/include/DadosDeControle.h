@@ -10,11 +10,16 @@
 
 class DadosDeControle {
 
-	long tempoAcumuladoUsoDeCPU;
+	double tempoNecessarioDeCPU;
+	double tempoAcumuladoUsoDeCPU;
+	double tempoNecessarioParaFinalizarExecucao;
 
 public:
-	DadosDeControle();
-	virtual ~DadosDeControle();
+	DadosDeControle(double tempoNecessarioDeCPU);
+	void adicionarTempoAcumuladoDeCPU(double tempo);
+	double getTempoNecessarioParaFinalizarExecucao();
+	bool isProcessoFinalizado();
+
 };
 
 #endif /* DADOSDECONTROLE_H_ */

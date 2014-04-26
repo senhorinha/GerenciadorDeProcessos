@@ -7,12 +7,30 @@
 
 #include "include/DadosDeControle.h"
 
-DadosDeControle::DadosDeControle() {
-	// TODO Auto-generated constructor stub
+DadosDeControle::DadosDeControle(double tempoNecessarioDeExeucao) {
+	tempoNecessarioDeCPU = tempoNecessarioDeExeucao;
 
 }
 
-DadosDeControle::~DadosDeControle() {
-	// TODO Auto-generated destructor stub
+void DadosDeControle::adicionarTempoAcumuladoDeCPU(double tempo) {
+	tempoAcumuladoUsoDeCPU += tempo;
+}
+
+double DadosDeControle::getTempoNecessarioParaFinalizarExecucao() {
+	tempoNecessarioParaFinalizarExecucao = tempoNecessarioDeCPU
+			- tempoAcumuladoUsoDeCPU;
+	if (tempoNecessarioParaFinalizarExecucao <= 0) {
+		return 0;
+	} else {
+		return tempoNecessarioParaFinalizarExecucao;
+	}
+}
+
+bool DadosDeControle::isProcessoFinalizado() {
+	if (tempoNecessarioDeCPU <= tempoAcumuladoUsoDeCPU) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
