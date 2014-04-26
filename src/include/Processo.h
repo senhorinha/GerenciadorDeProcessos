@@ -26,11 +26,7 @@ public:
 
 	Processo * pai;
 
-	Relogio relogio;
-
-	int duracao;
-
-	Processo(DadosDeEstado de, DadosDeIdentificacao di, DadosDeControle dc, int duracao);
+	Processo(DadosDeEstado de, DadosDeIdentificacao di, DadosDeControle dc);
 	Processo();
 	virtual ~Processo();
 	Processo * getPai();

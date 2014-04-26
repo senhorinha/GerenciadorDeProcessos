@@ -10,11 +10,11 @@
 Processo::~Processo() {
 }
 
-Processo::Processo(DadosDeEstado de, DadosDeIdentificacao di, DadosDeControle dc, int d) {
+Processo::Processo(DadosDeEstado de, DadosDeIdentificacao di,
+		DadosDeControle dc) {
 	id = di;
 	control = dc;
 	estado = de;
-	duracao = d;
 }
 
 Processo::Processo() {
