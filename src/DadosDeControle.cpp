@@ -7,12 +7,12 @@
 
 #include "include/DadosDeControle.h"
 
-DadosDeControle::DadosDeControle(double tempoNecessarioDeExeucao) {
+DadosDeControle::DadosDeControle(long tempoNecessarioDeExeucao) {
 	tempoNecessarioDeCPU = tempoNecessarioDeExeucao;
 
 }
 
-void DadosDeControle::adicionarTempoAcumuladoDeCPU(double tempo) {
+void DadosDeControle::adicionarTempoAcumuladoDeCPU(long tempo) {
 	tempoAcumuladoUsoDeCPU += tempo;
 }
 
