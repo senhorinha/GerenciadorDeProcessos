@@ -1,27 +1,16 @@
 #ifndef RELOGIO_H_
 #define RELOGIO_H_
 
-#include <iostream>
-#include <chrono>
-#include <ctime>
-
 class Relogio {
 
-	std::chrono::time_point<std::chrono::system_clock> inicio;
+private:
+	long tempoAtual;
 
 public:
 	Relogio();
-	virtual ~Relogio();
-
 	void iniciar();
-	double getTempoPercorridoEmMilisegundos();
-	double getTempoPercorridoEmSegundos();
-	bool cronometrarEmMilisegundos(double tempo);
-	bool cronometrarEmSegundos(double tempo);
-
-private:
-	long funcaoParaTomarTempo();
-
+	void tictac();
+	long getTempoAtual();
 };
 
 #endif /* RELOGIO_H_ */
