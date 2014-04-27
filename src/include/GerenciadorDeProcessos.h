@@ -10,7 +10,9 @@
 
 #include "Relogio.h"
 #include "ListaOrdenadaDeProcessos.h"
-#include <list>
+#include "Lista.h"
+
+using namespace std;
 
 #define NumeroMaximoDeProcessosNaMemoria 50
 
@@ -20,18 +22,20 @@ class GerenciadorDeProcessos {
 
 	FilaDeProcessos criados;
 	ListaDeProcessos prontos;
-	list<Processo> executando;
-	list<Processo> bloqueados;
-	list<Processo> terminados;
 
-	int numeroDeCores;
-	int totalProcessos;
+	Lista<Processo> executando;
+	Lista<Processo> bloqueados;
+	Lista<Processo> terminados;
 
-	int quantum;
+
+	size_t numeroDeCores;
+	size_t totalProcessos;
+
+	size_t quantum;
 
 public:
 	GerenciadorDeProcessos();
-	GerenciadorDeProcessos(int cores);
+	GerenciadorDeProcessos(size_t cores);
 	virtual ~GerenciadorDeProcessos();
 
 	void criar(Processo p);

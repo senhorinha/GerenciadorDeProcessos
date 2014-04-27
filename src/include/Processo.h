@@ -16,7 +16,7 @@
 
 #include "Relogio.h"
 
-class Processo : public Priorizavel<Processo>{
+class Processo: public Priorizavel<Processo> {
 
 public:
 
@@ -31,8 +31,12 @@ public:
 	virtual ~Processo();
 	Processo * getPai();
 
-	bool operator< (Processo & p){
+	bool operator<(Processo & p) {
 		return compareTo(p);
+	}
+
+	bool operator==(Processo & p) {
+		return id.id == p.id.id;
 	}
 
 };

@@ -12,7 +12,7 @@ GerenciadorDeProcessos::GerenciadorDeProcessos() {
 	totalProcessos = 0;
 }
 
-GerenciadorDeProcessos::GerenciadorDeProcessos(int cores) {
+GerenciadorDeProcessos::GerenciadorDeProcessos(size_t cores) {
 	numeroDeCores = cores;
 }
 
@@ -38,7 +38,7 @@ void GerenciadorDeProcessos::carregarEmMemoria() {
 Processo GerenciadorDeProcessos::escalonarProximo() {
 	Processo p;
 	p = prontos.removerMaisPrioritario();
-	executando.push_back(p);
+	executando.adicionar(p);
 	p.estado.estadoAtual = p.estado.Executando;
 	return p;
 }
@@ -49,67 +49,66 @@ void GerenciadorDeProcessos::atualizarQuantum() {
 
 bool GerenciadorDeProcessos::simularBloqueio(Processo p) {
 	if (rand() % 100 < 2.5) {
-		bloqueados.push_back(p);
-		executando.remove(p);
+		bloqueados.adicionar(p);
+		executando.remover(p);
 		return true;
 	}
 	return false;
 }
 
 void GerenciadorDeProcessos::simularDesbloqueio() {
-	list<Processo> aux;
+	Lista<Processo> aux;
 	Processo p;
-	for (int i = 0; i < bloqueados.size(); ++i) {
-		p = bloqueados.front();
-		aux.push_back(p);
-		bloqueados.pop_front();
+	for (int i = 0; i < bloqueados.getTamanho(); ++i) {
+		p = bloqueados.removerDoInicio();
+		aux.adicionar(p);
 		if (rand() % 100 < 2.5) {
 			prontos.adicionar(p);
-			aux.pop_back();
+			aux.removerDoInicio();
 		}
 	}
 
-	for (int i = 0; i < aux.size(); ++i) {
-		bloqueados.push_back(aux.front());
-		aux.pop_front();
+	for (int i = 0; i < aux.getTamanho(); ++i) {
+		bloqueados.adicionar(aux.removerDoInicio());
 	}
 
 }
 
 void GerenciadorDeProcessos::terminar(Processo p) {
 	p.estado.estadoAtual = p.estado.Terminado;
-	terminados.push_back(p);
-	executando.remove(p);
+	terminados.adicionar(p);
+	executando.remover(p);
 }
 
 void GerenciadorDeProcessos::preemptar(Processo p) {
 	p.estado.estadoAtual = p.estado.Pronto;
 	prontos.reduzirPrioridade(p, quantum - 1);
-	executando.remove(p);
+	executando.remover(p);
 }
 
 void GerenciadorDeProcessos::simular() {
 	Processo p;
 	atualizarQuantum();
-	while (terminados.size() != totalProcessos) {
+	while (terminados.getTamanho() != totalProcessos) {
 		carregarEmMemoria();
 		simularDesbloqueio();
 		p = escalonarProximo();
-		double tempoParaFinalizarExecucao =
+		long tempoParaFinalizarExecucao =
 				p.control.getTempoNecessarioParaFinalizarExecucao();
 		if (tempoParaFinalizarExecucao > quantum) {
-			relogio.cronometrarEmMilisegundos(quantum);
+			relogio.percorrerTempoEm(quantum);
 			p.control.adicionarTempoAcumuladoDeCPU(quantum);
 		} else {
-			relogio.cronometrarEmMilisegundos(tempoParaFinalizarExecucao);
+			relogio.percorrerTempoEm(tempoParaFinalizarExecucao);
 			p.control.adicionarTempoAcumuladoDeCPU(tempoParaFinalizarExecucao);
 		}
+
 		if (simularBloqueio(p)) {
-			break;
-			if (p.control.isProcessoFinalizado()) {
+			if (p.control.isProcessoFinalizado())
 				terminar(p);
-			}
+			break;
 		}
 		preemptar(p);
 	}
 }
+

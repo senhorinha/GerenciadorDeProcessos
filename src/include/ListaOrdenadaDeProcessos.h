@@ -17,7 +17,6 @@
 
 class ListaDeProcessos {
 
-
 	//opção de implementação. Como há exatamente 10 filas,
 	//é mais simples implementar com um vetor de filas
 	vector<FilaDeProcessos> lista;
@@ -28,10 +27,11 @@ public:
 
 	void adicionar(Processo p);
 	Processo removerMaisPrioritario();
-	int maiorPrioridade();
+	size_t maiorPrioridade();
 	void reduzirPrioridade(Processo p, int pAtual);
 	int tamanho();
-	void printar();
+
+	void printar(); //para debugar
 };
 
 #endif /* LISTADEPROCESSOS_H_ */

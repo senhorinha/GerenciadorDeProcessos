@@ -12,7 +12,7 @@
 using namespace std;
 
 ListaDeProcessos::ListaDeProcessos() {
-	for (int i = maxPriority; i < minPriority; ++i)
+	for (size_t i = maxPriority; i < minPriority; ++i)
 		lista.push_back(FilaDeProcessos(i));
 }
 
@@ -34,7 +34,7 @@ int ListaDeProcessos::tamanho() {
 
 Processo ListaDeProcessos::removerMaisPrioritario() {
 	Processo p;
-	for (int i = 0; i < lista.size(); ++i) {
+	for (size_t i = 0; i < lista.size(); ++i) {
 		if (!lista[i].fila.empty()) {
 			p = lista[i].fila.front();
 			lista[i].fila.pop();
@@ -43,8 +43,8 @@ Processo ListaDeProcessos::removerMaisPrioritario() {
 	}
 }
 
-int ListaDeProcessos::maiorPrioridade() {
-	for (int i = 0; i < lista.size(); ++i) {
+size_t ListaDeProcessos::maiorPrioridade() {
+	for (size_t i = 0; i < lista.size(); ++i) {
 		if (!lista[i].fila.empty()) {
 			return i;
 		}
