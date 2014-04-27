@@ -19,8 +19,9 @@ public:
 
 	int id;
 	string usuario;
+	string nome;
 
-	DadosDeIdentificacao(int i, string us);
+	DadosDeIdentificacao(int i, string us, string nome);
 	DadosDeIdentificacao();
 	virtual ~DadosDeIdentificacao();
 };
