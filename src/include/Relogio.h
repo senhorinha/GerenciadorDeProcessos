@@ -9,8 +9,9 @@ private:
 public:
 	Relogio();
 	void iniciar();
-	void tictac();
 	long getTempoAtual();
+	void tictac();
+	void percorrerTempoEm(long tempo);
 };
 
 #endif /* RELOGIO_H_ */

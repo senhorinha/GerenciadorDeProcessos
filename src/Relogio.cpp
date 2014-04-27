@@ -15,3 +15,7 @@ void Relogio::tictac() {
 	tempoAtual++;
 }
 
+void Relogio::percorrerTempoEm(long tempo) {
+	tempoAtual += tempo;
+}
+
