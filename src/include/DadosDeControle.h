@@ -13,9 +13,11 @@ class DadosDeControle {
 	long tempoNecessarioDeCPU;
 	long tempoAcumuladoUsoDeCPU;
 	long tempoNecessarioParaFinalizarExecucao;
+	long entradaNoSistema;
 
 public:
-	DadosDeControle(long tempoNecessarioDeCPU);
+	DadosDeControle(long tempoNecessarioDeCPU, long entradaNoSistema);
+	DadosDeControle();
 	void adicionarTempoAcumuladoDeCPU(long tempo);
 	double getTempoNecessarioParaFinalizarExecucao();
 	bool isProcessoFinalizado();
