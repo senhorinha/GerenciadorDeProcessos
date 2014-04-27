@@ -3,6 +3,7 @@
 #include <string.h>
 #include <vector>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "include/GerenciadorDeProcessos.h"
 #include "include/Processo.h"
@@ -15,6 +16,9 @@ using namespace std;
 
 void printMessage();
 string getUserInput();
+bool executarHelp(vector<string> partesDoComando);
+void criarProcesso(vector<string> comando);
+
 GerenciadorDeProcessos g;
 AnalisadorDeComando *analisador = new AnalisadorDeComando();
 
@@ -24,11 +28,11 @@ void execute(string comando) {
 	if (nomeDoComando == "help") {
 		executarHelp(partesDoComando);
 	} else if (nomeDoComando == "start") {
-		//TODO: Iniciar simulação
+		g.simular();
 	} else if (nomeDoComando == "reset") {
 		//TODO: Zerar todos os processos e apresentar mensagem inicial novamente
 	} else if (nomeDoComando == "add") {
-		//TODO: Adicionar processo
+		criarProcesso(partesDoComando);
 	} else if (nomeDoComando == "exit") {
 		exit(1);
 	}
@@ -73,9 +77,9 @@ bool executarHelp(vector<string> partesDoComando) {
 				exemploDeUso = "reset";
 			} else if (comandoNoHelp == "add") {
 				descricao = "Adiciona um processo à simulação";
-				comoUtilizar = "add p1 p2 p3 p4 p5";
+				comoUtilizar = "add p1 p2 p3 p4";
 				parametros =
-						"p1-> nome do processo\np2-> grandeza de tempo (s para segundos ou ms para milisegundos)\np3->tempo de sistema em que o processo será inserido\np4->tempo necessário de execução\np5->prioridade (entre 1 a 10 sendo 1 o menos prioritario)";
+						"p1-> nome do processo\np2-> usuário\np3->tempo de sistema em que o processo será inserido\np4->tempo necessário de execução)";
 				exemploDeUso = "add estudar s 5 10 1";
 			} else if (comandoNoHelp == "exit") {
 				descricao = "Fechar programa";
@@ -140,4 +144,25 @@ void printMessage() {
 			<< endl;
 	cout << endl;
 	imprimirComandosDisponiveis();
+}
+
+void criarProcesso(vector<string> comando) {
+	Processo p;
+
+	for (size_t i = 0; i < comando.size(); ++i) {
+		cout << comando[i] << endl;
+	}
+
+	p.id.id = g.getTotalProcessos();
+	p.id.nome = comando[1];
+	p.id.usuario = comando[2];
+
+	long duracao = atol(comando[3].c_str());
+	long tempoChegada = atol(comando[4].c_str());
+
+	DadosDeControle d(duracao, tempoChegada);
+
+	p.control = d;
+
+	g.criar(p);
 }
