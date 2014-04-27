@@ -47,6 +47,10 @@ public:
 	void simularDesbloqueio();
 	void terminar(Processo p);
 
+	size_t getTotalProcessos(){
+		return totalProcessos;
+	}
+
 	void simular();
 };
 
