@@ -8,6 +8,8 @@
 #include "include/GerenciadorDeProcessos.h"
 #include <cstdlib>
 
+#include <iostream>
+
 GerenciadorDeProcessos::GerenciadorDeProcessos() {
 	totalProcessos = 0;
 }
@@ -23,6 +25,8 @@ void GerenciadorDeProcessos::criar(Processo p) {
 	criados.fila.push(p);
 	p.estado.estadoAtual = p.estado.Criado;
 	totalProcessos++;
+
+	cout << p.id.id << " asdad " << p.id.usuario<<endl;
 }
 
 void GerenciadorDeProcessos::carregarEmMemoria() {

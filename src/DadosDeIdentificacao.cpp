@@ -7,9 +7,10 @@
 
 #include "include/DadosDeIdentificacao.h"
 
-DadosDeIdentificacao::DadosDeIdentificacao(int i, string us) {
+DadosDeIdentificacao::DadosDeIdentificacao(int i, string us, string n) {
 	id = i;
 	usuario = us;
+	nome = n;
 }
 
 DadosDeIdentificacao::DadosDeIdentificacao() {
