@@ -14,8 +14,6 @@ class DadosDeControle {
 	long tempoAcumuladoUsoDeCPU;
 	long tempoNecessarioParaFinalizarExecucao;
 	long entradaNoSistema;
-
-private:
 	// quantas vezes deteve o controle da cpu;
 	int numeroDeVezesNaCPU;
 
@@ -26,7 +24,6 @@ public:
 	double getTempoNecessarioParaFinalizarExecucao();
 	bool isProcessoFinalizado();
 	void incrementarNumeroDeVezesNaCPU();
-	int getNumeroDeVezesNaCPU();
 };
 
 #endif /* DADOSDECONTROLE_H_ */

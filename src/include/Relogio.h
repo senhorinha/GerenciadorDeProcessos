@@ -3,7 +3,6 @@
 
 class Relogio {
 
-private:
 	long tempoAtual;
 
 public:

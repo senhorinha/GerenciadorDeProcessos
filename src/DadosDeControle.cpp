@@ -19,10 +19,6 @@ void DadosDeControle::incrementarNumeroDeVezesNaCPU() {
 	numeroDeVezesNaCPU += 1;
 }
 
-int DadosDeControle::getNumeroDeVezesNaCPU() {
-	return numeroDeVezesNaCPU;
-}
-
 void DadosDeControle::adicionarTempoAcumuladoDeCPU(long tempo) {
 	tempoAcumuladoUsoDeCPU += tempo;
 }
