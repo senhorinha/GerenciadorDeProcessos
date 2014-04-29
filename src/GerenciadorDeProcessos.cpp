@@ -7,7 +7,6 @@
 
 #include "include/GerenciadorDeProcessos.h"
 #include <cstdlib>
-
 #include <iostream>
 
 GerenciadorDeProcessos::GerenciadorDeProcessos() {
@@ -26,7 +25,7 @@ void GerenciadorDeProcessos::criar(Processo p) {
 	p.estado.estadoAtual = p.estado.Criado;
 	totalProcessos++;
 
-	cout << p.id.id << " asdad " << p.id.usuario<<endl;
+	cout << p.id.id << " asdad " << p.id.usuario << endl;
 }
 
 void GerenciadorDeProcessos::carregarEmMemoria() {
@@ -98,9 +97,8 @@ void GerenciadorDeProcessos::simular() {
 		simularDesbloqueio();
 		p = escalonarProximo();
 		p.estado.estadoAtual = p.estado.Executando;
-		p.control.incrementarNumeroDeVezesNaCPU();
 		long tempoParaFinalizarExecucao =
-				p.control.getTempoNecessarioParaFinalizarExecucao();
+				p.control.tempoNecessarioParaFinalizarExecucao;
 		if (tempoParaFinalizarExecucao > quantum) {
 			relogio.percorrerTempoEm(quantum);
 			p.control.adicionarTempoAcumuladoDeCPU(quantum);
@@ -108,7 +106,8 @@ void GerenciadorDeProcessos::simular() {
 			relogio.percorrerTempoEm(tempoParaFinalizarExecucao);
 			p.control.adicionarTempoAcumuladoDeCPU(tempoParaFinalizarExecucao);
 		}
-
+		terminal.imprimirTempo(relogio.getTempoAtual());
+		terminal.imprimirProcesso(p);
 		if (simularBloqueio(p)) {
 			if (p.control.isProcessoFinalizado())
 				terminar(p);

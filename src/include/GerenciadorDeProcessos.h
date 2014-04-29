@@ -11,6 +11,7 @@
 #include "Relogio.h"
 #include "ListaOrdenadaDeProcessos.h"
 #include "Lista.h"
+#include "Terminal.h"
 
 using namespace std;
 
@@ -19,7 +20,7 @@ using namespace std;
 class GerenciadorDeProcessos {
 
 	Relogio relogio;
-
+	Terminal terminal;
 	FilaDeProcessos criados;
 	ListaDeProcessos prontos;
 
