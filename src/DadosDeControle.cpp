@@ -15,29 +15,28 @@ DadosDeControle::DadosDeControle(long tempoNecessarioDeExeucao, long entrada) {
 DadosDeControle::DadosDeControle() {
 }
 
-void DadosDeControle::incrementarNumeroDeVezesNaCPU() {
-	numeroDeVezesNaCPU += 1;
-}
-
-void DadosDeControle::adicionarTempoAcumuladoDeCPU(long tempo) {
-	tempoAcumuladoUsoDeCPU += tempo;
-}
-
-double DadosDeControle::getTempoNecessarioParaFinalizarExecucao() {
-	tempoNecessarioParaFinalizarExecucao = tempoNecessarioDeCPU
-			- tempoAcumuladoUsoDeCPU;
-	if (tempoNecessarioParaFinalizarExecucao <= 0) {
-		return 0;
-	} else {
-		return tempoNecessarioParaFinalizarExecucao;
-	}
-}
-
 bool DadosDeControle::isProcessoFinalizado() {
 	if (tempoNecessarioDeCPU <= tempoAcumuladoUsoDeCPU) {
 		return true;
 	} else {
 		return false;
+	}
+}
+void DadosDeControle::adicionarTempoAcumuladoDeCPU(long tempo) {
+	tempoAcumuladoUsoDeCPU += tempo;
+	incrementarNumeroDeVezesNaCPU();
+	atualizarTempoNecessarioParaFinalizarExecucao();
+}
+
+void DadosDeControle::incrementarNumeroDeVezesNaCPU() {
+	numeroDeVezesNaCPU += 1;
+}
+
+void DadosDeControle::atualizarTempoNecessarioParaFinalizarExecucao() {
+	tempoNecessarioParaFinalizarExecucao = tempoNecessarioDeCPU
+			- tempoAcumuladoUsoDeCPU;
+	if (tempoNecessarioParaFinalizarExecucao <= 0) {
+		tempoNecessarioParaFinalizarExecucao = 0;
 	}
 }
 
