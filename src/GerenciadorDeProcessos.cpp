@@ -98,6 +98,7 @@ void GerenciadorDeProcessos::simular() {
 		simularDesbloqueio();
 		p = escalonarProximo();
 		p.estado.estadoAtual = p.estado.Executando;
+		p.control.incrementarNumeroDeVezesNaCPU();
 		long tempoParaFinalizarExecucao =
 				p.control.getTempoNecessarioParaFinalizarExecucao();
 		if (tempoParaFinalizarExecucao > quantum) {
