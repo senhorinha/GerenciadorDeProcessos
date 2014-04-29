@@ -24,14 +24,11 @@ bool AnalisadorDeComando::validarComando(string comando) {
 	for (string & c : getComandosDisponiveis()) {
 		if (c == partesDoComando[0]) {
 			if (partesDoComando[0] == "add") {
-				// add nome grandeza tempoEmQueEntraNoSistema tempoNecessarioDeExecucao prioridade = 6
 				if (partesDoComando.size() == 6) {
-					// testa se os tempos e a prioridade são números
 					if (isNumero(partesDoComando[3])
 							&& isNumero(partesDoComando[4])
 							&& isNumero(partesDoComando[5])) {
 						int prioridade = atoi(partesDoComando[5].c_str());
-						// testa se está no intervalo permitido [1-10]
 						if (prioridade >= PRIORIDADE_MINIMA
 								&& prioridade <= PRIORIDADE_MAXIMA) {
 							return true;
