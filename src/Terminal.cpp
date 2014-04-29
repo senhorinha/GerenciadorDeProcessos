@@ -22,3 +22,7 @@ void Terminal::imprimirTempo(long tempo) {
 	printf("Tempo do Sistema: %lu", tempo);
 }
 
+void Terminal::limparTela() {
+	system("clear");
+}
+

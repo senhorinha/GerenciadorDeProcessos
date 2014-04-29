@@ -3,6 +3,7 @@
 
 #include "Processo.h"
 #include <iostream>
+#include <stdlib.h> // system
 
 using namespace std;
 
@@ -12,6 +13,7 @@ public:
 	Terminal();
 	void imprimirProcesso(Processo p);
 	void imprimirTempo(long tempo);
+	void limparTela();
 };
 
 #endif /* TERMINAL_H_ */
