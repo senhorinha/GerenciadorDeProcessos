@@ -43,7 +43,9 @@ bool AnalisadorDeComando::validarComando(string comando) {
 					}
 				}
 				return true;
-			} else if(partesDoComando.size() == 1){
+			} else if (c == "help" && partesDoComando.size() == 2) {
+				return true;
+			} else if (partesDoComando.size() == 1) {
 				return true;
 			}
 		}
