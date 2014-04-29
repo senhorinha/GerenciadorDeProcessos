@@ -18,3 +18,7 @@ void Terminal::imprimirProcesso(Processo p) {
 			p.control.numeroDeVezesNaCPU);
 }
 
+void Terminal::imprimirTempo(long tempo) {
+	printf("Tempo do Sistema: %lu", tempo);
+}
+

@@ -11,6 +11,7 @@ class Terminal {
 public:
 	Terminal();
 	void imprimirProcesso(Processo p);
+	void imprimirTempo(long tempo);
 };
 
 #endif /* TERMINAL_H_ */
