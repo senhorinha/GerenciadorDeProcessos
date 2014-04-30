@@ -28,8 +28,8 @@ void execute(string comando) {
 	if (nomeDoComando == "help") {
 		executarHelp(comando);
 	} else if (nomeDoComando == "start") {
-		//g.simular();
 		g.printarCriados();
+		g.carregarEmMemoria();
 	} else if (nomeDoComando == "reset") {
 		//TODO: Zerar todos os processos e apresentar mensagem inicial novamente
 	} else if (nomeDoComando == "add") {
@@ -150,10 +150,6 @@ void printMessage() {
 
 void criarProcesso(vector<string> comando) {
 	Processo p;
-
-	for (size_t i = 0; i < comando.size(); ++i) {
-		cout << comando[i] << endl;
-	}
 
 	p.id.id = g.getTotalProcessos();
 	p.id.nome = comando[1];
