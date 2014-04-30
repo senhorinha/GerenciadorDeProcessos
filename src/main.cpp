@@ -28,7 +28,8 @@ void execute(string comando) {
 	if (nomeDoComando == "help") {
 		executarHelp(comando);
 	} else if (nomeDoComando == "start") {
-		g.simular();
+		//g.simular();
+		g.printarCriados();
 	} else if (nomeDoComando == "reset") {
 		//TODO: Zerar todos os processos e apresentar mensagem inicial novamente
 	} else if (nomeDoComando == "add") {

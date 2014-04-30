@@ -24,8 +24,6 @@ void GerenciadorDeProcessos::criar(Processo p) {
 	criados.fila.push(p);
 	p.estado.estadoAtual = p.estado.Criado;
 	totalProcessos++;
-
-	cout << p.id.id << " asdad " << p.id.usuario << endl;
 }
 
 void GerenciadorDeProcessos::carregarEmMemoria() {
@@ -87,6 +85,23 @@ void GerenciadorDeProcessos::preemptar(Processo p) {
 	p.estado.estadoAtual = p.estado.Pronto;
 	prontos.reduzirPrioridade(p, quantum - 1);
 	executando.remover(p);
+}
+
+void GerenciadorDeProcessos::printarCriados() {
+	queue<Processo> aux;
+
+	for (int i = 0; i < criados.fila.size(); ++i) {
+		Processo p = criados.fila.front();
+		aux.push(p);
+		criados.fila.pop();
+		cout << "id: " << p.id.id << "\nnome: " << p.id.nome << "\nusuario: " << p.id.usuario << "\nchegada: "
+				<< p.control.entradaNoSistema << "\nduração: " << p.control.tempoNecessarioParaFinalizarExecucao << endl;
+	}
+
+	for (int i = 0; i < aux.size(); ++i) {
+		criados.fila.push(aux.front());
+		aux.pop();
+	}
 }
 
 void GerenciadorDeProcessos::simular() {
