@@ -16,7 +16,7 @@ using namespace std;
 
 void printMessage();
 string getUserInput();
-bool executarHelp(vector<string> partesDoComando);
+bool executarHelp(string comando);
 void criarProcesso(vector<string> comando);
 
 GerenciadorDeProcessos g;
@@ -26,7 +26,7 @@ void execute(string comando) {
 	vector<string> partesDoComando = analisador->separarParametros(comando);
 	string nomeDoComando = partesDoComando[0];
 	if (nomeDoComando == "help") {
-		executarHelp(partesDoComando);
+		executarHelp(comando);
 	} else if (nomeDoComando == "start") {
 		g.simular();
 	} else if (nomeDoComando == "reset") {
@@ -50,7 +50,8 @@ void imprimirComandosDisponiveis() {
 	}
 }
 
-bool executarHelp(vector<string> partesDoComando) {
+bool executarHelp(string comando) {
+	vector<string> partesDoComando = analisador->separarParametros(comando);
 	int numeroDeParametros = partesDoComando.size() - 1;
 	if (numeroDeParametros == 0) {
 		imprimirComandosDisponiveis();
@@ -64,7 +65,7 @@ bool executarHelp(vector<string> partesDoComando) {
 		string comoUtilizar;
 		string parametros;
 		string exemploDeUso;
-		if (analisador->validarComando(comandoNoHelp)) {
+		if (analisador->validarComando(comando)) {
 			if (comandoNoHelp == "start") {
 				descricao = "Inicia a simulação dos processos";
 				comoUtilizar = "start";
@@ -80,7 +81,7 @@ bool executarHelp(vector<string> partesDoComando) {
 				comoUtilizar = "add p1 p2 p3 p4";
 				parametros =
 						"p1-> nome do processo\np2-> usuário\np3->tempo de sistema em que o processo será inserido\np4->tempo necessário de execução)";
-				exemploDeUso = "add estudar s 5 10 1";
+				exemploDeUso = "add estudar fulano 5 10";
 			} else if (comandoNoHelp == "exit") {
 				descricao = "Fechar programa";
 				comoUtilizar = "exit";
