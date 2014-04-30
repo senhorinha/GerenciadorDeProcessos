@@ -28,7 +28,7 @@ void GerenciadorDeProcessos::criar(Processo p) {
 
 void GerenciadorDeProcessos::carregarEmMemoria() {
 	Processo p;
-	while (prontos.tamanho() < NumeroMaximoDeProcessosNaMemoria && criados.fila.size() > 0) {
+	while (criados.fila.size() > 0 && prontos.tamanho() < NumeroMaximoDeProcessosNaMemoria) {
 		p = criados.fila.front();
 		criados.fila.pop();
 		prontos.adicionar(p);
@@ -111,7 +111,8 @@ void GerenciadorDeProcessos::printarProntos() {
 		Processo p;
 
 		size_t tamFila = prontos.lista[i].fila.size();
-		for (size_t j = 0; j < tamFila; ++j) {
+
+		for (size_t j = 0; j < tamFila; j++) {
 			p = prontos.lista[i].fila.front();
 			aux.push(p);
 			prontos.lista[i].fila.pop();

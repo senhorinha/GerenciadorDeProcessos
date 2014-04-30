@@ -28,7 +28,6 @@ void execute(string comando) {
 	if (nomeDoComando == "help") {
 		executarHelp(comando);
 	} else if (nomeDoComando == "start") {
-		g.printarCriados();
 		g.carregarEmMemoria();
 		g.printarProntos();
 	} else if (nomeDoComando == "reset") {

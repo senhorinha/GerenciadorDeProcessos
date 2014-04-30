@@ -29,7 +29,11 @@ void ListaDeProcessos::printar() {
 }
 
 int ListaDeProcessos::tamanho() {
-	return lista.size();
+	int tamanho = 0;
+	for (size_t i = 0; i < lista.size(); ++i)
+		tamanho += lista[i].fila.size();
+
+	return tamanho;
 }
 
 Processo ListaDeProcessos::removerMaisPrioritario() {
