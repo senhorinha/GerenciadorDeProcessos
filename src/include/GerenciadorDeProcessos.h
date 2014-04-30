@@ -21,7 +21,8 @@ class GerenciadorDeProcessos {
 
 	Relogio relogio;
 	Terminal terminal;
-	FilaDeProcessos criados;
+
+	Lista<Processo> criados;
 	ListaDeProcessos prontos;
 
 	Lista<Processo> executando;
@@ -40,7 +41,7 @@ public:
 	virtual ~GerenciadorDeProcessos();
 
 	void criar(Processo p);
-	void carregarEmMemoria();
+	bool carregarEmMemoria();
 	Processo escalonarProximo();
 	void preemptar(Processo p);
 	void atualizarQuantum();

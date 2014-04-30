@@ -21,20 +21,25 @@ GerenciadorDeProcessos::~GerenciadorDeProcessos() {
 }
 
 void GerenciadorDeProcessos::criar(Processo p) {
+	relogio.iniciar();
 	p.estado.estadoAtual = p.estado.Criado;
-	criados.fila.push(p);
+	criados.adicionar(p);
 	totalProcessos++;
 }
 
-void GerenciadorDeProcessos::carregarEmMemoria() {
+bool GerenciadorDeProcessos::carregarEmMemoria() {
 	Processo p;
-	while (criados.fila.size() > 0
-			&& prontos.tamanho() < NumeroMaximoDeProcessosNaMemoria) {
-		p = criados.fila.front();
-		criados.fila.pop();
-		prontos.adicionar(p);
-		p.estado.estadoAtual = p.estado.Pronto;
+	bool existeProcessoEscalonavel = false;
+	for (unsigned int i = 0; i < criados.getTamanho(); i++){
+		p = criados.mostra(i);
+		if (p.control.entradaNoSistema <= relogio.getTempoAtual() && prontos.tamanho() <= NumeroMaximoDeProcessosNaMemoria) {
+			criados.remover(p);
+			p.estado.estadoAtual = p.estado.Pronto;
+			prontos.adicionar(p);
+			existeProcessoEscalonavel = true;
+		}
 	}
+	return existeProcessoEscalonavel;
 }
 
 Processo GerenciadorDeProcessos::escalonarProximo() {
@@ -70,7 +75,7 @@ void GerenciadorDeProcessos::simularDesbloqueio() {
 		}
 	}
 
-	for (int i = 0; i < aux.getTamanho(); ++i) {
+	for (unsigned int i = 0; i < aux.getTamanho(); ++i) {
 		bloqueados.adicionar(aux.removerDoInicio());
 	}
 
@@ -88,25 +93,25 @@ void GerenciadorDeProcessos::preemptar(Processo p) {
 	executando.remover(p);
 }
 
-void GerenciadorDeProcessos::printarCriados() {
-	queue<Processo> aux;
+/*void GerenciadorDeProcessos::printarCriados() {
+ queue<Processo> aux;
 
-	size_t tamFila = criados.fila.size();
-	for (size_t i = 0; i < tamFila; i++) {
-		Processo p = criados.fila.front();
-		aux.push(p);
-		criados.fila.pop();
-		cout << "id: " << p.id.id << "\nnome: " << p.id.nome << "\nusuario: "
-				<< p.id.usuario << "\nchegada: " << p.control.entradaNoSistema
-				<< "\nduração: " << p.control.tempoNecessarioDeCPU << endl;
-	}
+ size_t tamFila = criados.fila.size();
+ for (size_t i = 0; i < tamFila; i++) {
+ Processo p = criados.fila.front();
+ aux.push(p);
+ criados.fila.pop();
+ cout << "id: " << p.id.id << "\nnome: " << p.id.nome << "\nusuario: "
+ << p.id.usuario << "\nchegada: " << p.control.entradaNoSistema
+ << "\nduração: " << p.control.tempoNecessarioDeCPU << endl;
+ }
 
-	tamFila = aux.size();
-	for (size_t i = 0; i < tamFila; i++) {
-		criados.fila.push(aux.front());
-		aux.pop();
-	}
-}
+ tamFila = aux.size();
+ for (size_t i = 0; i < tamFila; i++) {
+ criados.fila.push(aux.front());
+ aux.pop();
+ }
+ }*/
 
 void GerenciadorDeProcessos::printarProntos() {
 	for (size_t i = 0; i < prontos.lista.size(); ++i) {
@@ -119,11 +124,7 @@ void GerenciadorDeProcessos::printarProntos() {
 			p = prontos.lista[i].fila.front();
 			aux.push(p);
 			prontos.lista[i].fila.pop();
-			cout << "id: " << p.id.id << "\nnome: " << p.id.nome
-					<< "\nusuario: " << p.id.usuario << "\nchegada: "
-					<< p.control.entradaNoSistema << "\nduração: "
-					<< p.control.tempoNecessarioDeCPU << "\nprioridade: " << i
-					<< endl;
+			cout << "id: " << p.id.id << "\nnome: " << p.id.nome << "\nusuario: " << p.id.usuario << "\nchegada: " << p.control.entradaNoSistema << "\nduração: " << p.control.tempoNecessarioDeCPU << "\nprioridade: " << i << endl;
 		}
 		tamFila = aux.size();
 		for (size_t j = 0; j < tamFila; ++j) {
@@ -135,16 +136,20 @@ void GerenciadorDeProcessos::printarProntos() {
 
 void GerenciadorDeProcessos::simular() {
 	Processo p;
+	bool existemProcessos = false;
 	while (terminados.getTamanho() != totalProcessos) {
-		carregarEmMemoria();
+		existemProcessos = carregarEmMemoria();
 		simularDesbloqueio();
+		if(!existemProcessos){
+			relogio.percorrerTempoEm(1);
+			continue;
+		}
 		atualizarQuantum();
 		p = escalonarProximo();
-		terminal.imprimirTempo(relogio.getTempoAtual());
-		terminal.imprimirProcesso(p,quantum-1);
+		/*terminal.imprimirTempo(relogio.getTempoAtual());
+		terminal.imprimirProcesso(p, quantum - 1);*/
 		p.estado.estadoAtual = p.estado.Executando;
-		long tempoParaFinalizarExecucao =
-				p.control.tempoNecessarioParaFinalizarExecucao;
+		unsigned long tempoParaFinalizarExecucao = p.control.tempoNecessarioParaFinalizarExecucao;
 		if (tempoParaFinalizarExecucao > quantum) {
 			relogio.percorrerTempoEm(quantum);
 			p.control.adicionarTempoAcumuladoDeCPU(quantum);
@@ -153,7 +158,7 @@ void GerenciadorDeProcessos::simular() {
 			p.control.adicionarTempoAcumuladoDeCPU(tempoParaFinalizarExecucao);
 		}
 		terminal.imprimirTempo(relogio.getTempoAtual());
-		terminal.imprimirProcesso(p,quantum-1);
+		terminal.imprimirProcesso(p, quantum - 1);
 		if (p.control.isProcessoFinalizado()) {
 			cout << "\n--> Processo finalizado <--" << endl;
 			terminar(p);
@@ -161,6 +166,7 @@ void GerenciadorDeProcessos::simular() {
 		} else if (simularBloqueio(p))
 			continue;
 		preemptar(p);
+		cout << "\n--> Processo preemptado <--" << endl;
 	}
 }
 
