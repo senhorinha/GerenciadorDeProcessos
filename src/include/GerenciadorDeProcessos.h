@@ -48,7 +48,6 @@ public:
 	void simularDesbloqueio();
 	void terminar(Processo p);
 
-	void printarCriados(); //debugar
 	void printarProntos(); //debugar
 
 	void exibirEstatisticas();
