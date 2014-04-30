@@ -94,26 +94,6 @@ void GerenciadorDeProcessos::preemptar(Processo p) {
 	prontos.reduzirPrioridade(p, quantum - 1);
 }
 
-/*void GerenciadorDeProcessos::printarCriados() {
- queue<Processo> aux;
-
- size_t tamFila = criados.fila.size();
- for (size_t i = 0; i < tamFila; i++) {
- Processo p = criados.fila.front();
- aux.push(p);
- criados.fila.pop();
- cout << "id: " << p.id.id << "\nnome: " << p.id.nome << "\nusuario: "
- << p.id.usuario << "\nchegada: " << p.control.entradaNoSistema
- << "\nduração: " << p.control.tempoNecessarioDeCPU << endl;
- }
-
- tamFila = aux.size();
- for (size_t i = 0; i < tamFila; i++) {
- criados.fila.push(aux.front());
- aux.pop();
- }
- }*/
-
 void GerenciadorDeProcessos::printarProntos() {
 	for (size_t i = 0; i < prontos.lista.size(); ++i) {
 		queue<Processo> aux;
@@ -185,14 +165,12 @@ void GerenciadorDeProcessos::simular() {
 			cout << "\n--> Processo finalizado <--" << endl;
 			p.control.turnaround = relogio.getTempoAtual();
 			double temp = (double)p.control.tempoAcumuladoUsoDeCPU / (double)relogio.getTempoAtual();
-			cout << "asdasd" << temp << endl;
 			p.control.fracaoDeTempo = temp;
 			terminar(p);
 			continue;
 		} else if (simularBloqueio(p))
 			continue;
 		preemptar(p);
-		cout << "num prontos: " << prontos.tamanho() << endl;
 		cout << "\n--> Processo preemptado <--" << endl;
 	}
 	exibirEstatisticas();
