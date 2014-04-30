@@ -140,6 +140,8 @@ void GerenciadorDeProcessos::simular() {
 		carregarEmMemoria();
 		simularDesbloqueio();
 		p = escalonarProximo();
+		terminal.imprimirTempo(relogio.getTempoAtual());
+		terminal.imprimirProcesso(p);
 		p.estado.estadoAtual = p.estado.Executando;
 		long tempoParaFinalizarExecucao =
 				p.control.tempoNecessarioParaFinalizarExecucao;
