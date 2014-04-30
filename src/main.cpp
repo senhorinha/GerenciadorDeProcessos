@@ -30,6 +30,7 @@ void execute(string comando) {
 	} else if (nomeDoComando == "start") {
 		g.carregarEmMemoria();
 		g.printarProntos();
+		g.simular();
 	} else if (nomeDoComando == "reset") {
 		//TODO: Zerar todos os processos e apresentar mensagem inicial novamente
 	} else if (nomeDoComando == "add") {
@@ -155,8 +156,8 @@ void criarProcesso(vector<string> comando) {
 	p.id.nome = comando[1];
 	p.id.usuario = comando[2];
 
-	long duracao = atol(comando[3].c_str());
-	long tempoChegada = atol(comando[4].c_str());
+	long tempoChegada = atol(comando[3].c_str());
+	long duracao = atol(comando[4].c_str());
 
 	DadosDeControle d(duracao, tempoChegada);
 
