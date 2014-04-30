@@ -13,6 +13,7 @@ public:
 	Terminal();
 	void imprimirProcesso(Processo p, int prioridade);
 	void imprimirTempo(long tempo);
+	void imprimirEstatisticas(Processo p);
 	void limparTela();
 };
 

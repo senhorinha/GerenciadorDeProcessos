@@ -51,6 +51,8 @@ public:
 	void printarCriados(); //debugar
 	void printarProntos(); //debugar
 
+	void exibirEstatisticas();
+
 	size_t getTotalProcessos(){
 		return totalProcessos;
 	}

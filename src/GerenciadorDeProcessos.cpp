@@ -30,7 +30,7 @@ void GerenciadorDeProcessos::criar(Processo p) {
 bool GerenciadorDeProcessos::carregarEmMemoria() {
 	Processo p;
 	bool existeProcessoEscalonavel = false;
-	for (unsigned int i = 0; i < criados.getTamanho(); i++){
+	for (unsigned int i = 0; i < criados.getTamanho(); i++) {
 		p = criados.mostra(i);
 		if (p.control.entradaNoSistema <= relogio.getTempoAtual() && prontos.tamanho() <= NumeroMaximoDeProcessosNaMemoria) {
 			criados.remover(p);
@@ -135,20 +135,41 @@ void GerenciadorDeProcessos::printarProntos() {
 	}
 }
 
+void GerenciadorDeProcessos::exibirEstatisticas() {
+	Processo p;
+
+	double somaTempoResposta = 0;
+	double somaTempoTurnaround = 0;
+	double somaTempoUsoDaCPU = 0;
+
+	for (unsigned int i = 0; i < terminados.getTamanho(); ++i) {
+		p = terminados.mostra(i);
+		terminal.imprimirEstatisticas(p);
+		somaTempoResposta += p.control.tempoDeResposta;
+		somaTempoTurnaround += p.control.turnaround;
+		somaTempoUsoDaCPU += p.control.tempoAcumuladoUsoDeCPU;
+	}
+
+	cout << "---------------------------------------------------------------------" << endl;
+	cout << "Tempo médio de resposta: " << somaTempoResposta / totalProcessos << endl;
+	cout << "Tempo médio de turnaround: " << somaTempoTurnaround / totalProcessos << endl;
+	cout << "Taxa de uso da CPU: " << somaTempoUsoDaCPU / totalProcessos*100 << "%" << endl;
+}
+
 void GerenciadorDeProcessos::simular() {
 	Processo p;
 	bool existemProcessos = false;
 	while (terminados.getTamanho() != totalProcessos) {
-		existemProcessos = carregarEmMemoria() || prontos.tamanho()>0;
+		existemProcessos = carregarEmMemoria() || prontos.tamanho() > 0;
 		simularDesbloqueio();
-		if(!existemProcessos){
+		if (!existemProcessos) {
 			relogio.percorrerTempoEm(1);
 			continue;
 		}
 		atualizarQuantum();
 		p = escalonarProximo();
 		p.estado.estadoAtual = p.estado.Executando;
-		if(p.control.numeroDeVezesNaCPU == 0)
+		if (p.control.numeroDeVezesNaCPU == 0)
 			p.control.tempoDeResposta = relogio.getTempoAtual();
 		unsigned long tempoParaFinalizarExecucao = p.control.tempoNecessarioParaFinalizarExecucao;
 		if (tempoParaFinalizarExecucao > quantum) {
@@ -162,15 +183,18 @@ void GerenciadorDeProcessos::simular() {
 		terminal.imprimirProcesso(p, quantum - 1);
 		if (p.control.isProcessoFinalizado()) {
 			cout << "\n--> Processo finalizado <--" << endl;
-			terminar(p);
 			p.control.turnaround = relogio.getTempoAtual();
-			p.control.fracaoDeTempo = p.control.tempoAcumuladoUsoDeCPU / relogio.getTempoAtual();
+			double temp = (double)p.control.tempoAcumuladoUsoDeCPU / (double)relogio.getTempoAtual();
+			cout << "asdasd" << temp << endl;
+			p.control.fracaoDeTempo = temp;
+			terminar(p);
 			continue;
 		} else if (simularBloqueio(p))
 			continue;
 		preemptar(p);
-		cout << "num prontos: " << prontos.tamanho()<<endl;
+		cout << "num prontos: " << prontos.tamanho() << endl;
 		cout << "\n--> Processo preemptado <--" << endl;
 	}
+	exibirEstatisticas();
 }
 
