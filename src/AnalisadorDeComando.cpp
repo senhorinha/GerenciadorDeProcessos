@@ -24,18 +24,13 @@ bool AnalisadorDeComando::validarComando(string comando) {
 	for (string & c : getComandosDisponiveis()) {
 		if (c == partesDoComando[0]) {
 			if (partesDoComando[0] == "add") {
-				if (partesDoComando.size() == 6) {
+				if (partesDoComando.size() == 5) {
 					if (isNumero(partesDoComando[3])
-							&& isNumero(partesDoComando[4])
-							&& isNumero(partesDoComando[5])) {
-						int prioridade = atoi(partesDoComando[5].c_str());
-						if (prioridade >= PRIORIDADE_MINIMA
-								&& prioridade <= PRIORIDADE_MAXIMA) {
-							return true;
-						}
+							&& isNumero(partesDoComando[4])) {
+						return true;
 					}
 				}
-				return true;
+				return false;
 			} else if (c == "help" && partesDoComando.size() == 2) {
 				return true;
 			} else if (partesDoComando.size() == 1) {
