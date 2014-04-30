@@ -135,13 +135,13 @@ void GerenciadorDeProcessos::printarProntos() {
 
 void GerenciadorDeProcessos::simular() {
 	Processo p;
-	atualizarQuantum();
 	while (terminados.getTamanho() != totalProcessos) {
 		carregarEmMemoria();
 		simularDesbloqueio();
+		atualizarQuantum();
 		p = escalonarProximo();
 		terminal.imprimirTempo(relogio.getTempoAtual());
-		terminal.imprimirProcesso(p);
+		terminal.imprimirProcesso(p,quantum-1);
 		p.estado.estadoAtual = p.estado.Executando;
 		long tempoParaFinalizarExecucao =
 				p.control.tempoNecessarioParaFinalizarExecucao;
@@ -153,13 +153,13 @@ void GerenciadorDeProcessos::simular() {
 			p.control.adicionarTempoAcumuladoDeCPU(tempoParaFinalizarExecucao);
 		}
 		terminal.imprimirTempo(relogio.getTempoAtual());
-		terminal.imprimirProcesso(p);
+		terminal.imprimirProcesso(p,quantum-1);
 		if (p.control.isProcessoFinalizado()) {
 			cout << "\n--> Processo finalizado <--" << endl;
 			terminar(p);
-		} else if (simularBloqueio(p)) {
-			break;
-		}
+			continue;
+		} else if (simularBloqueio(p))
+			continue;
 		preemptar(p);
 	}
 }

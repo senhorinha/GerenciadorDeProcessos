@@ -11,7 +11,7 @@ class Terminal {
 
 public:
 	Terminal();
-	void imprimirProcesso(Processo p);
+	void imprimirProcesso(Processo p, int prioridade);
 	void imprimirTempo(long tempo);
 	void limparTela();
 };

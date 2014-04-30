@@ -4,7 +4,7 @@ Terminal::Terminal() {
 
 }
 
-void Terminal::imprimirProcesso(Processo p) {
+void Terminal::imprimirProcesso(Processo p, int prioridade) {
 
 	printf("\n***************************************");
 	printf("\nNome: %s", p.id.nome.c_str());
@@ -16,6 +16,10 @@ void Terminal::imprimirProcesso(Processo p) {
 			p.control.tempoNecessarioParaFinalizarExecucao);
 	printf("\nNúmero de vezes que já utilizou a CPU: %u",
 			p.control.numeroDeVezesNaCPU);
+	printf("\nPrioridade: %u",
+				prioridade);
+	printf("\nQuantum: %u",
+				prioridade+1);
 }
 
 void Terminal::imprimirTempo(long tempo) {
