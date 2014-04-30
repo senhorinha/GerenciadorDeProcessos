@@ -12,6 +12,7 @@ DadosDeControle::DadosDeControle(long tempoNecessarioDeExeucao, long entrada) {
 	tempoNecessarioParaFinalizarExecucao = tempoNecessarioDeCPU;
 	entradaNoSistema = entrada;
 	numeroDeVezesNaCPU = 0;
+	tempoAcumuladoUsoDeCPU = 0;
 }
 
 DadosDeControle::DadosDeControle() {
