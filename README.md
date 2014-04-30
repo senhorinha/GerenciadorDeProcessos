@@ -81,19 +81,21 @@ A estrutura do PCB está dividido em três categorias:
 ## Algoritmos de Escalonamento
 
 ### Round-Robin
-```
-TODO: EXPLICAR
-```
+
+Visando justiça entre processos, o Round-Robin, emprega compartilhamento por tempo, dando a cada processo um tempo de uso de CPU, também chamado de quantum. De forma cíclica, cada processo executa um pouco.
+
 ### Shortest Remaining Time Next
-```
-TODO: EXPLICAR
-```
-### Outros
-```
-TODO: LISTAR
-```
+
+Nesse algoritmo, o processo que tiver o menor tempo necessário para concluir sua execução terá a maior prioridade na escalonamento.
 
 # Algoritmo escolhido: Filas múltiplas com quantum diferente #
-```
-TODO: Explicar
-```
+
+Nas Filas múltiplas com quantum diferente os processos recém chegados são alocados a uma lista de maior prioridade porém de menor quantum. Ao serem executados, se não terminaram a execução são transferidos para uma lista de menor prioridade porém com quantum maior e assim adiante.
+
+### Outros
+
+* [First in First Out](http://en.wikipedia.org/wiki/First_In_First_Out)
+* [Fixed Priority Preemptive scheduling](http://en.wikipedia.org/wiki/Fixed_priority_pre-emptive_scheduling)
+* [Manual scheduling](http://en.wikipedia.org/w/index.php?title=Manual_scheduling&action=edit&redlink=1)
+* Outros.
+
