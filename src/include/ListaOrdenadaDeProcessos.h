@@ -16,12 +16,12 @@
 #include "FilaDeProcessos.h"
 
 class ListaDeProcessos {
-
+public:
 	//opção de implementação. Como há exatamente 10 filas,
 	//é mais simples implementar com um vetor de filas
 	vector<FilaDeProcessos> lista;
 
-public:
+
 	ListaDeProcessos();
 	virtual ~ListaDeProcessos();
 

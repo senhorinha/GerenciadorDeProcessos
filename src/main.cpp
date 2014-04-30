@@ -30,6 +30,7 @@ void execute(string comando) {
 	} else if (nomeDoComando == "start") {
 		g.printarCriados();
 		g.carregarEmMemoria();
+		g.printarProntos();
 	} else if (nomeDoComando == "reset") {
 		//TODO: Zerar todos os processos e apresentar mensagem inicial novamente
 	} else if (nomeDoComando == "add") {

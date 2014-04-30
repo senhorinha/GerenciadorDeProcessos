@@ -49,6 +49,7 @@ public:
 	void terminar(Processo p);
 
 	void printarCriados(); //debugar
+	void printarProntos(); //debugar
 
 	size_t getTotalProcessos(){
 		return totalProcessos;
