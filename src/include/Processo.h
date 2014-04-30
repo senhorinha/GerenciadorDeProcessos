@@ -24,12 +24,9 @@ public:
 	DadosDeIdentificacao id;
 	DadosDeControle control;
 
-	Processo * pai;
-
 	Processo(DadosDeEstado de, DadosDeIdentificacao di, DadosDeControle dc);
 	Processo();
 	virtual ~Processo();
-	Processo * getPai();
 
 	bool operator<(Processo & p) {
 		return compareTo(p);

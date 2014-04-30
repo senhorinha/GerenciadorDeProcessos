@@ -23,6 +23,7 @@ void Terminal::imprimirProcesso(Processo p, int prioridade) {
 }
 
 void Terminal::imprimirTempo(long tempo) {
+	printf("\n###########################################################################");
 	printf("\n");
 	printf("\n###### Relógio ######");
 	printf("\nTempo do Sistema: %lu", tempo);

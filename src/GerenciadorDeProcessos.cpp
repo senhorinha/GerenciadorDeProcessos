@@ -58,6 +58,7 @@ bool GerenciadorDeProcessos::simularBloqueio(Processo p) {
 	if (rand() % 100 < 2.5) {
 		bloqueados.adicionar(p);
 		executando.remover(p);
+		cout << "\n--> Processo bloqueado <--" << endl;
 		return true;
 	}
 	return false;
@@ -89,8 +90,8 @@ void GerenciadorDeProcessos::terminar(Processo p) {
 
 void GerenciadorDeProcessos::preemptar(Processo p) {
 	p.estado.estadoAtual = p.estado.Pronto;
-	prontos.reduzirPrioridade(p, quantum - 1);
 	executando.remover(p);
+	prontos.reduzirPrioridade(p, quantum - 1);
 }
 
 /*void GerenciadorDeProcessos::printarCriados() {
@@ -138,7 +139,7 @@ void GerenciadorDeProcessos::simular() {
 	Processo p;
 	bool existemProcessos = false;
 	while (terminados.getTamanho() != totalProcessos) {
-		existemProcessos = carregarEmMemoria();
+		existemProcessos = carregarEmMemoria() || prontos.tamanho()>0;
 		simularDesbloqueio();
 		if(!existemProcessos){
 			relogio.percorrerTempoEm(1);
@@ -146,9 +147,9 @@ void GerenciadorDeProcessos::simular() {
 		}
 		atualizarQuantum();
 		p = escalonarProximo();
-		/*terminal.imprimirTempo(relogio.getTempoAtual());
-		terminal.imprimirProcesso(p, quantum - 1);*/
 		p.estado.estadoAtual = p.estado.Executando;
+		if(p.control.numeroDeVezesNaCPU == 0)
+			p.control.tempoDeResposta = relogio.getTempoAtual();
 		unsigned long tempoParaFinalizarExecucao = p.control.tempoNecessarioParaFinalizarExecucao;
 		if (tempoParaFinalizarExecucao > quantum) {
 			relogio.percorrerTempoEm(quantum);
@@ -162,10 +163,13 @@ void GerenciadorDeProcessos::simular() {
 		if (p.control.isProcessoFinalizado()) {
 			cout << "\n--> Processo finalizado <--" << endl;
 			terminar(p);
+			p.control.turnaround = relogio.getTempoAtual();
+			p.control.fracaoDeTempo = p.control.tempoAcumuladoUsoDeCPU / relogio.getTempoAtual();
 			continue;
 		} else if (simularBloqueio(p))
 			continue;
 		preemptar(p);
+		cout << "num prontos: " << prontos.tamanho()<<endl;
 		cout << "\n--> Processo preemptado <--" << endl;
 	}
 }

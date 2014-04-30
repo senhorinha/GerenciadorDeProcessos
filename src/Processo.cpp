@@ -20,7 +20,4 @@ Processo::Processo(DadosDeEstado de, DadosDeIdentificacao di,
 Processo::Processo() {
 }
 
-Processo * Processo::getPai() {
-	return pai;
-}
 

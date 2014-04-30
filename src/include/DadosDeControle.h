@@ -19,6 +19,10 @@ public:
 	// quantas vezes deteve o controle da cpu;
 	int numeroDeVezesNaCPU;
 
+	long turnaround;
+	long tempoDeResposta;
+	double fracaoDeTempo;
+
 	DadosDeControle(long tempoNecessarioDeCPU, long entradaNoSistema);
 	DadosDeControle();
 	void adicionarTempoAcumuladoDeCPU(long tempo);

@@ -29,7 +29,6 @@ class GerenciadorDeProcessos {
 	Lista<Processo> bloqueados;
 	Lista<Processo> terminados;
 
-
 	size_t numeroDeCores;
 	size_t totalProcessos;
 
